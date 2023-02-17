@@ -117,28 +117,46 @@
 			
 		if(dir == 'd') {
 			y++;
+			if (y==M-1) 
+				y = 0;
 			Head++;
 			Field[x][y] = Head;
 		}
 		
 		if(dir == 'a') {
 			y--;
+			if (y == 0)
+				y = M-1;
 			Head++;
 			Field[x][y] = Head;
 		}
 
 		if(dir == 'w') {
 			x--;
+			if (x == -1) 
+				x = N-1;
 			Head++;
 			Field[x][y] = Head;
 		}
 		
 		if(dir == 's') {
 			x++;
+			if (x == N-1)
+				x = 0;
 			Head++;
 			Field[x][y] = Head;
 		}
-		
+	}
+	
+	void TailRemove() {
+		for (i=0;i<N;i++) {
+			for (j=0;j<M;j++) {
+				if(Field[i][j] == Tail) {
+					Field[i][j] = 0;
+				}
+			}
+		}
+		Tail++;
 	}
 	
 	void main() {
@@ -149,7 +167,7 @@
 			ResetScreenPosition();
 			Random();
 			movement();
+			TailRemove();
 			Sleep(99);
 		}
-		
 	}
