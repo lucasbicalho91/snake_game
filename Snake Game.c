@@ -7,7 +7,7 @@
 	#define N 20
 	#define M 40
 	
-	int i, j, Field[N][M], x, y, Gy, Head, Tail, Game, Frogs, a, b, var, dir, score, HighScore;
+	int i, j, Field[N][M], x, y, Gy, Head, Tail, Game, Frogs, a, b, var, dir, score, HighScore, Speed;
 	
 	FILE *f;
 	
@@ -17,7 +17,7 @@
 		fclose(f);
 		
 		for (i=0; i<N; i++) {
-			for (j-0; j<M; j++) {
+			for (j=0; j<M; j++) {
 				Field[i][j] = 0;
 			}
 		}
@@ -31,6 +31,7 @@
 		Frogs = 0;
 		dir = 'd';
 		score = 0;
+		Speed = 99;
 		
 		for(i=0; i<Head;i++) {
 			Gy++;
@@ -39,13 +40,14 @@
 	}
 	
 	//Aqui utilizaremos os códigos ASCII 186, 187, 188, 200, 201 e 205 para criar as quatro paredes.
-	// Para criar a cobra será utilizado os códigos ASCII 176 e 178
+	//Para criar a cobra será utilizado os códigos ASCII 176 e 178
 	//Para criar o sapo foi utilizado o código ASCII 15
 	
 	void print () {
 		for (i=0; i<=M+1; i++) {
 			if (i==0) {
 				printf("%c", 201);
+				
 			} else if (i==M+1) {
 				printf("%c", 187);
 				
@@ -53,6 +55,7 @@
 				printf ("%c", 205);
 			}
 		}
+		
 		printf("Current Score: %d HighScore: %d", score, HighScore);
 		printf ("\n");
 		
@@ -80,6 +83,7 @@
 		for (i=0; i<=M+1; i++) {
 			if (i==0) {
 				printf("%c", 200);
+				
 			} else if (i==M+1) {
 				printf("%c", 188);
 				
@@ -106,6 +110,8 @@
 		if(Frogs == 0 && Field[a][b] == 0) {
 			Field[a][b] = -1;
 			Frogs = 1;
+			if (Speed > 10 && score != 0) 
+				Speed = Speed - 5;
 		} 
 	}
 	
@@ -116,14 +122,13 @@
 			return -1;
 	}
 	
-		
-	int GameOver() {
+	void GameOver() {
 		printf("\a");
 		Sleep(1500);
 		system("Cls");
 		
 		if (score>HighScore) {
-			printf("NEW HighScore %d!!!!\n\n", score);
+			printf("New HighScore %d!!!!\n\n", score);
 				system("pause");
 				f=fopen("highscore.txt", "w");
 				fprintf(f, "%d", score);
@@ -133,8 +138,20 @@
 		system("Cls");
 		printf("\n\n                      GAME OVER !!!!!");
 		printf("                          Score : %d \n\n", score);
+		printf("                          Press Enter to play again or ESC to exit ... \n");
 		
-		Game = 1;
+		while (1) {
+			var = getch_noblock();
+			if (var == 13) {
+				Game = 0;
+				snakeInitialization();
+				break;
+			} else if (var == 27) {
+				Game = 1;
+				break;
+			}	
+		}
+		system("Cls");
 	}
 	
 	void movement () {
@@ -233,6 +250,6 @@
 			Random();
 			movement();
 			TailRemove();
-			Sleep(99);
+			Sleep(Speed);
 		}
 	}
