@@ -108,6 +108,17 @@
 			return -1;
 	}
 	
+		
+	int GameOver() {
+		printf("\a");
+		Sleep(1500);
+		system("Cls");
+		
+		printf("\n\n                      GAME OVER !!!!!");
+		
+		Game = 1;
+	}
+	
 	void movement () {
 		var = getch_noblock();
 		var = tolower(var);
@@ -117,9 +128,13 @@
 			
 		if(dir == 'd') {
 			y++;
+			if (Field[x][y] != 0 && Field[x][y] != -1) 
+				GameOver();
+				
 			if (y==M-1) 
 				y = 0;
-				if(Field[x][y]==-1) {
+				
+			if(Field[x][y]==-1) {
 					Frogs = 0;
 					Tail -= 2;
 				}
@@ -129,8 +144,12 @@
 		
 		if(dir == 'a') {
 			y--;
+			if (Field[x][y] != 0 && Field[x][y] != -1) 
+				GameOver();
+				
 			if (y == 0)
 				y = M-1;
+				
 			if(Field[x][y]==-1) {
 				Frogs = 0;
 				Tail -= 2;
@@ -141,8 +160,12 @@
 
 		if(dir == 'w') {
 			x--;
+			if (Field[x][y] != 0 && Field[x][y] != -1) 
+				GameOver();
+				
 			if (x == -1) 
 				x = N-1;
+				
 			if(Field[x][y]==-1) {
 				Frogs = 0;
 				Tail -= 2;
@@ -153,8 +176,12 @@
 		
 		if(dir == 's') {
 			x++;
+			if (Field[x][y] != 0 && Field[x][y] != -1) 
+				GameOver();
+				
 			if (x == N-1)
 				x = 0;
+				
 			if(Field[x][y]==-1) {
 				Frogs = 0;
 				Tail -= 2;
