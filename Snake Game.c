@@ -7,7 +7,7 @@
 	#define N 20
 	#define M 40
 	
-	int i, j, Field[N][M], x, y, Gy, Head, Tail, Game, Frogs, a, b;
+	int i, j, Field[N][M], x, y, Gy, Head, Tail, Game, Frogs, a, b, var, dir;
 	
 	void snakeInitialization() {
 		for (i=0; i<N; i++) {
@@ -23,6 +23,7 @@
 		Tail = 1;
 		Game = 0;
 		Frogs = 0;
+		dir = 'd';
 		
 		for(i=0; i<Head;i++) {
 			Gy++;
@@ -32,6 +33,7 @@
 	
 	//Aqui utilizaremos os códigos ASCII 186, 187, 188, 200, 201 e 205 para criar as quatro paredes.
 	// Para criar a cobra será utilizado os códigos ASCII 176 e 178
+	//Para criar o sapo foi utilizado o código ASCII 15
 	
 	void print () {
 		for (i=0; i<=M+1; i++) {
@@ -97,6 +99,45 @@
 			Field[a][b] = -1;
 			Frogs = 1;
 		} 
+	}
+	
+	int getch_noblock() {
+		if(_kbhit())
+			return _getch();
+		else
+			return -1;
+	}
+	
+	void movement () {
+		var = getch_noblock();
+		var = tolower(var);
+		
+		if (((var == 'd' || var == 'a') || (var == 'w' || var =='s')) && (abs(dir-var)>5))
+			dir = var;
+			
+		if(dir == 'd') {
+			y++;
+			Head++;
+			Field[x][y] = Head;
+		}
+		
+		if(dir == 'a') {
+			y--;
+			Head++;
+			Field[x][y] = Head;
+		}
+
+		if(dir == 'w') {
+			x--;
+			Head++;
+			Field[x][y] = Head;
+		}
+		
+		if(dir == 's') {
+			x++;
+			Head++;
+			Field[x][y] = Head;
+		}
 		
 	}
 	
@@ -107,6 +148,8 @@
 			print();
 			ResetScreenPosition();
 			Random();
+			movement();
+			Sleep(99);
 		}
 		
 	}
