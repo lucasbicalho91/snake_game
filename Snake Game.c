@@ -7,9 +7,15 @@
 	#define N 20
 	#define M 40
 	
-	int i, j, Field[N][M], x, y, Gy, Head, Tail, Game, Frogs, a, b, var, dir;
+	int i, j, Field[N][M], x, y, Gy, Head, Tail, Game, Frogs, a, b, var, dir, score, HighScore;
+	
+	FILE *f;
 	
 	void snakeInitialization() {
+		f=fopen("highscore.txt", "r");
+		fscanf(f, "%d", &HighScore);
+		fclose(f);
+		
 		for (i=0; i<N; i++) {
 			for (j-0; j<M; j++) {
 				Field[i][j] = 0;
@@ -24,6 +30,7 @@
 		Game = 0;
 		Frogs = 0;
 		dir = 'd';
+		score = 0;
 		
 		for(i=0; i<Head;i++) {
 			Gy++;
@@ -46,6 +53,7 @@
 				printf ("%c", 205);
 			}
 		}
+		printf("Current Score: %d HighScore: %d", score, HighScore);
 		printf ("\n");
 		
 		for (i=0; i<N; i++) {
@@ -114,7 +122,17 @@
 		Sleep(1500);
 		system("Cls");
 		
+		if (score>HighScore) {
+			printf("NEW HighScore %d!!!!\n\n", score);
+				system("pause");
+				f=fopen("highscore.txt", "w");
+				fprintf(f, "%d", score);
+				fclose(f);
+		}
+		
+		system("Cls");
 		printf("\n\n                      GAME OVER !!!!!");
+		printf("                          Score : %d \n\n", score);
 		
 		Game = 1;
 	}
@@ -136,6 +154,7 @@
 				
 			if(Field[x][y]==-1) {
 					Frogs = 0;
+					score += 5;
 					Tail -= 2;
 				}
 			Head++;
@@ -152,6 +171,7 @@
 				
 			if(Field[x][y]==-1) {
 				Frogs = 0;
+				score += 5;
 				Tail -= 2;
 			}
 			Head++;
@@ -168,6 +188,7 @@
 				
 			if(Field[x][y]==-1) {
 				Frogs = 0;
+				score += 5;
 				Tail -= 2;
 			}
 			Head++;
@@ -184,6 +205,7 @@
 				
 			if(Field[x][y]==-1) {
 				Frogs = 0;
+				score += 5;
 				Tail -= 2;
 			}
 			Head++;
