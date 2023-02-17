@@ -119,6 +119,10 @@
 			y++;
 			if (y==M-1) 
 				y = 0;
+				if(Field[x][y]==-1) {
+					Frogs = 0;
+					Tail -= 2;
+				}
 			Head++;
 			Field[x][y] = Head;
 		}
@@ -127,6 +131,10 @@
 			y--;
 			if (y == 0)
 				y = M-1;
+			if(Field[x][y]==-1) {
+				Frogs = 0;
+				Tail -= 2;
+			}
 			Head++;
 			Field[x][y] = Head;
 		}
@@ -135,6 +143,10 @@
 			x--;
 			if (x == -1) 
 				x = N-1;
+			if(Field[x][y]==-1) {
+				Frogs = 0;
+				Tail -= 2;
+			}
 			Head++;
 			Field[x][y] = Head;
 		}
@@ -143,6 +155,10 @@
 			x++;
 			if (x == N-1)
 				x = 0;
+			if(Field[x][y]==-1) {
+				Frogs = 0;
+				Tail -= 2;
+			}
 			Head++;
 			Field[x][y] = Head;
 		}
